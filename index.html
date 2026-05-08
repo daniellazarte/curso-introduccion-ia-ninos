@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso de IA para Niños - 23 de Mayo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gradient-start: #667eea;
+            --gradient-end: #764ba2;
+            --accent-pink: #f857a6;
+            --accent-yellow: #ffd166;
+            --accent-cyan: #06d6a0;
+            --dark: #2d3436;
+            --light-bg: #f8f9ff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--light-bg);
+            color: var(--dark);
+            overflow-x: hidden;
+            line-height: 1.7;
+        }
+
+        /* ========== ANIMACIONES DE FONDO ========== */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .floating-shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.08;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .shape1 { width: 400px; height: 400px; background: #667eea; top: -100px; left: -100px; }
+        .shape2 { width: 300px; height: 300px; background: #f857a6; bottom: -50px; right: -50px; animation-delay: -7s; }
+        .shape3 { width: 200px; height: 200px; background: #06d6a0; top: 50%; left: 50%; animation-delay: -14s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+            25% { transform: translateY(-40px) rotate(5deg) scale(1.1); }
+            50% { transform: translateY(-20px) rotate(-3deg) scale(0.95); }
+            75% { transform: translateY(-60px) rotate(2deg) scale(1.05); }
+        }
+
+        /* ========== HEADER ========== */
+        .hero-section {
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            padding: 0;
+            position: relative;
+            overflow: hidden;
+            clip-path: ellipse(150% 100% at 50% 0%);
+            min-height: 480px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-content {
+            padding: 4rem 1.5rem 6rem;
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
+
+        .robot-icon {
+            font-size: 5rem;
+            animation: bounce 2s infinite;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.25);
+            backdrop-filter: blur(10px);
+            padding: 0.6rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .hero-section h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+            line-height: 1.2;
+        }
+
+        .hero-section .lead {
+            font-size: 1.4rem;
+            opacity: 0.95;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-button {
+            background: white;
+            color: var(--gradient-start);
+            border: none;
+            padding: 1rem 3rem;
+            font-size: 1.3rem;
+            font-weight: 800;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            color: var(--gradient-start);
+            background: #fff;
+        }
+
+        /* ========== SECCIONES ========== */
+        .section-padding {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-weight: 900;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--gradient-start), var(--accent-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #636e72;
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            font-weight: 600;
+        }
+
+        /* ========== TARJETAS DE TEMAS ========== */
+        .topic-card {
+            background: white;
+            border-radius: 24px;
+            padding: 2rem 1.5rem;
+            height: 100%;
+            border: 2px solid transparent;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.08);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .topic-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(102,126,234,0.05) 0%, transparent 70%);
+            transition: all 0.4s ease;
+            opacity: 0;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(102, 126, 234, 0.2);
+            border-color: var(--accent-cyan);
+        }
+
+        .topic-card:hover::before {
+            opacity: 1;
+            animation: rotate 4s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .topic-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+            display: block;
+        }
+
+        .topic-card h3 {
+            font-weight: 800;
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            position: relative;
+            z-index: 1;
+            color: var(--dark);
+        }
+
+        .topic-card p {
+            color: #636e72;
+            font-size: 0.95rem;
+            position: relative;
+            z-index: 1;
+            margin: 0;
+        }
+
+        .emoji-bullet {
+            font-size: 1.2rem;
+            margin-right: 0.3rem;
+        }
+
+        /* ========== SECCIÓN DEL PROFESOR ========== */
+        .professor-card {
+            background: white;
+            border-radius: 30px;
+            padding: 3rem;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .professor-card:hover {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 25px 60px rgba(6, 214, 160, 0.15);
+        }
+
+        .professor-avatar {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gradient-start), var(--accent-pink));
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .linkedin-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #0a66c2;
+            color: white;
+            padding: 0.7rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            margin-top: 1.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(10,102,194,0.3);
+        }
+
+        .linkedin-link:hover {
+            background: #004182;
+            transform: translateY(-3px);
+            color: white;
+            box-shadow: 0 10px 25px rgba(10,102,194,0.4);
+        }
+
+        .badge-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .badge-list .badge {
+            background: #e9ecef;
+            color: var(--dark);
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 700;
+        }
+
+        /* ========== SECCIÓN DE PAGO ========== */
+        .payment-section {
+            background: linear-gradient(135deg, #2d3436 0%, #434a54 100%);
+            color: white;
+            clip-path: ellipse(120% 100% at 50% 100%);
+            padding: 5rem 0 6rem;
+        }
+
+        .payment-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 24px;
+            padding: 2rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .payment-card:hover {
+            background: rgba(255,255,255,0.2);
+            transform: scale(1.03);
+        }
+
+        .payment-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .price-tag {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin: 1rem 0;
+            color: var(--accent-yellow);
+        }
+
+        .copy-btn {
+            background: var(--accent-cyan);
+            border: none;
+            color: #2d3436;
+            font-weight: 700;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: #05b882;
+            transform: scale(1.05);
+        }
+
+        .copied-toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent-cyan);
+            color: #2d3436;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            z-index: 9999;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(6,214,160,0.4);
+        }
+
+        .copied-toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ========== FOOTER ========== */
+        .footer {
+            background: #2d3436;
+            color: rgba(255,255,255,0.7);
+            padding: 2rem 0;
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2.2rem;
+            }
+            .hero-section .lead {
+                font-size: 1.1rem;
+            }
+            .section-title {
+                font-size: 1.8rem;
+            }
+            .price-tag {
+                font-size: 2.5rem;
+            }
+            .topic-card {
+                margin-bottom: 1rem;
+            }
+            .payment-section {
+                clip-path: ellipse(150% 100% at 50% 100%);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Fondo animado -->
+    <div class="animated-bg">
+        <div class="floating-shape shape1"></div>
+        <div class="floating-shape shape2"></div>
+        <div class="floating-shape shape3"></div>
+    </div>
+
+    <!-- ==================== HERO ==================== -->
+    <header class="hero-section" id="inicio">
+        <div class="hero-content">
+            <span class="robot-icon">🤖</span>
+            <span class="hero-badge">🌟 Seminario Online 🌟</span>
+            <h1>Seminario: Misión Inteligencia Artificial: Crea, Entrena y Juega</h1>
+            <p class="lead">¡Descubre el fascinante mundo de la Inteligencia Artificial desde cero!</p>
+            <p style="font-size: 1.1rem; margin-bottom: 2rem;">📅 <strong>Sábado 23 de Mayo</strong> | ⏰ <strong>11:00 AM - 1:00 PM</strong></p>
+            <a href="#pago" class="cta-button">🚀 ¡Quiero Inscribirme!</a>
+        </div>
+    </header>
+
+    <!-- ==================== ¿QUÉ APRENDERÁN? ==================== -->
+    <section class="section-padding" id="temario">
+        <div class="container">
+            <h2 class="section-title">🌟 ¿Qué Aprenderán los Niños?</h2>
+            <p class="section-subtitle">Un viaje paso a paso desde lo más básico hasta crear su primer proyecto con IA</p>
+            <div class="row g-4">
+                <!-- Tema 1 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="topic-card">
+                        <span class="topic-icon">🧠</span>
+                        <h3>¿Qué es la IA?</h3>
+                        <p><span class="emoji-bullet">💡</span> Entender cómo las máquinas "aprenden" y "piensan" de forma sencilla con ejemplos cotidianos.</p>
+                    </div>
+                </div>
+                <!-- Tema 2 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="topic-card">
+                        <span class="topic-icon">🔍</span>
+                        <h3>IA en la Vida Real</h3>
+                        <p><span class="emoji-bullet">📱</span> Asistentes virtuales, videojuegos, YouTube Kids… ¿Dónde se esconde la IA?</p>
+                    </div>
+                </div>
+                <!-- Tema 3 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="topic-card">
+                        <span class="topic-icon">🎨</span>
+                        <h3>Creatividad + IA</h3>
+                        <p><span class="emoji-bullet">🖼️</span> Cómo generar dibujos, historias y música con herramientas de IA para niños.</p>
+                    </div>
+                </div>
+                <!-- Tema 4 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="topic-card">
+                        <span class="topic-icon">🛠️</span>
+                        <h3>Mini Proyecto</h3>
+                        <p><span class="emoji-bullet">🏆</span> Los niños crearán su propio proyecto usando inteligencia artificial y prompts como los profesionales de la industria.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== PROFESOR ==================== -->
+    <section class="section-padding" id="profesor" style="background: #f1f2f6;">
+        <div class="container">
+            <h2 class="section-title">👨‍🏫 Conoce a tu Profesor</h2>
+            <p class="section-subtitle">Un experto apasionado por enseñar tecnología a las nuevas generaciones</p>
+            <div class="professor-card">
+                <div class="professor-avatar">
+                    <img src="instructor.png" width="180px" />
+                </div>
+                <h3 style="font-weight: 800; font-size: 1.8rem;">Ing. Daniel Lázarte</h3>
+                <p style="font-size: 1.1rem; color: #636e72; margin-bottom: 0.5rem;">
+                    <i class="bi bi-geo-alt-fill"></i> Software Developer Senior
+                </p>
+                <p style="color: #636e72; margin-bottom: 1rem;">
+                    Profesional con +25 Años de amplia experiencia en Arquitectura de Software Desarrollo de plataformas de alta performance, inteligencia artificial, machine learning y educación tecnológica. 
+                    Apasionado por acercar la tecnología a niños y jóvenes de forma divertida y práctica.
+                </p>
+                <div class="badge-list">
+                    <span class="badge">🤖 Inteligencia Artificial</span>
+                    <span class="badge">📊 Ciencia de Datos</span>
+                    <span class="badge">🎓 Educación Tech</span>
+                    <span class="badge">🚀 Innovación</span>
+                </div>
+                <a href="https://www.linkedin.com/in/dlazarte/" target="_blank" rel="noopener noreferrer" class="linkedin-link">
+                    <i class="bi bi-linkedin"></i> Ver perfil en LinkedIn <i class="bi bi-box-arrow-up-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== PRECIO Y PAGO ==================== -->
+    <section class="payment-section" id="pago">
+        <div class="container" style="position: relative; z-index: 2;">
+            <h2 class="text-center text-white fw-bold mb-2" style="font-size: 2.5rem;">💰 Inversión</h2>
+            <p class="text-center text-white mb-5" style="font-size: 1.2rem; opacity: 0.9;">Elige tu método de pago favorito ¡Es rápido y seguro!</p>
+            <div class="text-center mb-5">
+                <span class="price-tag">S/ 189.00</span>
+                <p style="color: rgba(255,255,255,0.8);">Pago único · Cupos limitados ⚡</p>
+            </div>
+            <div class="row g-4 justify-content-center">
+                <!-- YAPE -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="payment-card">
+                        <span class="payment-icon">💜</span>
+                        <h3 class="fw-bold">YAPE</h3>
+                        <p style="opacity: 0.9;">Escanea o copia el número</p>
+                        <p style="font-size: 1.5rem; font-weight: 800; letter-spacing: 1px;" id="yapeNumber">922 315 430</p>
+                        <button class="copy-btn btn" onclick="copiarTexto('yapeNumber', 'Yape')">
+                            <i class="bi bi-clipboard"></i> Copiar número
+                        </button>
+                        <p class="mt-3" style="font-size: 0.85rem; opacity: 0.7;">A nombre de: Daniel Lázarte</p>
+                    </div>
+                </div>
+                <!-- PLIN -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="payment-card">
+                        <span class="payment-icon">🔵</span>
+                        <h3 class="fw-bold">PLIN</h3>
+                        <p style="opacity: 0.9;">Escanea o copia el número</p>
+                        <p style="font-size: 1.5rem; font-weight: 800; letter-spacing: 1px;" id="plinNumber">922 315 430</p>
+                        <button class="copy-btn btn" onclick="copiarTexto('plinNumber', 'Plin')">
+                            <i class="bi bi-clipboard"></i> Copiar número
+                        </button>
+                        <p class="mt-3" style="font-size: 0.85rem; opacity: 0.7;">A nombre de: Daniel Lázarte</p>
+                    </div>
+                </div>
+                <!-- TRANSFERENCIA -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="payment-card">
+                        <span class="payment-icon">🏦</span>
+                        <h3 class="fw-bold">Transferencia</h3>
+                        <p style="opacity: 0.9;">BCP - Cuenta de Ahorros</p>
+                        <p style="font-size: 1.2rem; font-weight: 800;" id="cciNumber">002-191-19585488401251</p>
+                        <button class="copy-btn btn" onclick="copiarTexto('cciNumber', 'CCI')">
+                            <i class="bi bi-clipboard"></i> Copiar CCI
+                        </button>
+                        <p class="mt-3" style="font-size: 0.85rem; opacity: 0.7;">CCI: BCP</p>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-5">
+                <p style="color: rgba(255,255,255,0.9); font-size: 1.1rem;">
+                    <i class="bi bi-whatsapp"></i> <strong>Después de pagar, envíanos tu comprobante al WhatsApp:</strong> 
+                    <a href="https://wa.me/51922315430" target="_blank" rel="noopener" style="color: var(--accent-cyan); text-decoration: none; font-weight: 800;">+51 922 315 430</a>
+                </p>
+                <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem;">
+                    Te enviaremos el enlace de Zoom y las instrucciones para el curso.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== BENEFICIOS EXTRA ==================== -->
+    <section class="section-padding" id="beneficios">
+        <div class="container">
+            <h2 class="section-title">🎁 ¡Incluye Estos Beneficios!</h2>
+            <div class="row g-4 justify-content-center">
+                <div class="col-md-8">
+                    <div style="background: white; border-radius: 24px; padding: 2.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+                        <div class="row g-3">
+                            <div class="col-12 d-flex align-items-center gap-3">
+                                <span style="font-size: 2rem;">📹</span>
+                                <div>
+                                    <strong style="font-size: 1.1rem;">Acceso a la grabación</strong>
+                                    <p style="color: #636e72; margin: 0;">Por si no pueden asistir en vivo o quieren repasar.</p>
+                                </div>
+                            </div>
+                            <div class="col-12 d-flex align-items-center gap-3">
+                                <span style="font-size: 2rem;">📄</span>
+                                <div>
+                                    <strong style="font-size: 1.1rem;">Guía PDF descargable</strong>
+                                    <p style="color: #636e72; margin: 0;">Con ejercicios y recursos para seguir aprendiendo en casa.</p>
+                                </div>
+                            </div>
+                            <div class="col-12 d-flex align-items-center gap-3">
+                                <span style="font-size: 2rem;">🏅</span>
+                                <div>
+                                    <strong style="font-size: 1.1rem;">Certificado digital</strong>
+                                    <p style="color: #636e72; margin: 0;">Diploma de participación al finalizar el seminario.</p>
+                                </div>
+                            </div>
+                            <div class="col-12 d-flex align-items-center gap-3">
+                                <span style="font-size: 2rem;">💬</span>
+                                <div>
+                                    <strong style="font-size: 1.1rem;">Grupo de consultas</strong>
+                                    <p style="color: #636e72; margin: 0;">Acceso a un chat grupal para resolver dudas después del curso.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== RECORDATORIO FINAL ==================== -->
+    <section class="text-center py-5" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white;">
+        <div class="container">
+            <h2 style="font-weight: 900; font-size: 2.2rem;">📅 ¡Nos vemos el Sábado 23 de Mayo!</h2>
+            <p style="font-size: 1.3rem; margin-bottom: 2rem;">⏰ 11:00 AM - 1:00 PM | 💻 Vía Zoom (enlace enviado tras el pago)</p>
+            <a href="#pago" class="cta-button" style="background: white; color: #667eea;">💜 Reserva tu Cupo Ahora</a>
+            <p class="mt-3" style="opacity: 0.8;">Cupos limitados — Asegura el lugar de tu pequeño genio 🧑‍🚀</p>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="footer text-center">
+        <div class="container">
+            <p style="margin-bottom: 0.2rem;">© 2026 Misión Inteligencia Artificial: Crea, Entrena y Juega · Todos los derechos reservados</p>
+            <p style="font-size: 0.85rem; opacity: 0.6;">
+                Instructor: Ing. Daniel Lázarte | 
+                <a href="https://www.linkedin.com/in/dlazarte/" target="_blank" rel="noopener" style="color: rgba(255,255,255,0.8);">LinkedIn</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- ==================== TOAST DE COPIADO ==================== -->
+    <div class="copied-toast" id="copiedToast">
+        <i class="bi bi-check-circle-fill"></i> ¡Copiado! ✅
+    </div>
+
+    <!-- ==================== SCRIPTS ==================== -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js">
+    </script>
+    <script>
+        function copiarTexto(elementId, metodo) {
+            const elemento = document.getElementById(elementId);
+            const texto = elemento.textContent.trim();
+
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(texto).then(() => {
+                    mostrarToast(metodo);
+                }).catch(err => {
+                    copiarFallback(texto, metodo);
+                });
+            } else {
+                copiarFallback(texto, metodo);
+            }
+        }
+
+        function copiarFallback(texto, metodo) {
+            const textArea = document.createElement('textarea');
+            textArea.value = texto;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                mostrarToast(metodo);
+            } catch (err) {
+                alert('No se pudo copiar. Por favor copia manualmente: ' + texto);
+            }
+            document.body.removeChild(textArea);
+        }
+
+        function mostrarToast(metodo) {
+            const toast = document.getElementById('copiedToast');
+            toast.innerHTML = `<i class="bi bi-check-circle-fill"></i> ¡Número de ${metodo} copiado! ✅`;
+            toast.classList.add('show');
+            clearTimeout(toast._timeout);
+            toast._timeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+    </script>
+</body>
+</html>
